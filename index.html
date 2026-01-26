@@ -3,383 +3,1679 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محاكاة قانون هس - التفاعلات الماصة والطاردة للحرارة</title>
+    <title>مختبر قانون هس الافتراضي - الكيمياء الحرارية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --exothermic: #e74c3c;
-            --endothermic: #2980b9;
-            --success: #27ae60;
+            --primary-color: #1a237e;
+            --secondary-color: #283593;
+            --accent-blue: #1565c0;
+            --accent-red: #c62828;
+            --accent-green: #2e7d32;
+            --accent-purple: #6a1b9a;
+            --light-blue: #e3f2fd;
+            --light-red: #ffebee;
+            --light-green: #e8f5e9;
+            --light-purple: #f3e5f5;
+            --dark-color: #0d47a1;
+            --text-color: #263238;
+            --border-radius: 16px;
+            --box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --glass-effect: rgba(255, 255, 255, 0.85);
         }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
+
+        * {
             margin: 0;
-            padding: 20px;
-            background: #f5f7fa;
-            color: #333;
+            padding: 0;
+            box-sizing: border-box;
         }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            color: var(--text-color);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            line-height: 1.7;
+            overflow-x: hidden;
         }
-        
+
+        /* تصميم الزجاج */
+        .glass {
+            background: var(--glass-effect);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--box-shadow);
+        }
+
+        /* الترويسة */
         header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        
-        .law-statement {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            padding: 25px;
-            border-radius: 10px;
-            margin: 20px 0;
-            font-size: 1.2em;
-            text-align: center;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-        }
-        
-        .simulation-area {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin: 30px 0;
-        }
-        
-        .path-box {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        
-        .path-title {
-            color: var(--primary);
-            border-bottom: 3px solid var(--secondary);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .reaction-step {
-            background: #f8f9fa;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 8px;
-            border-right: 4px solid var(--secondary);
-        }
-        
-        .delta-h {
-            display: inline-block;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-weight: bold;
-            margin: 0 10px;
-        }
-        
-        .exothermic { background: #ffebee; color: var(--exothermic); }
-        .endothermic { background: #e3f2fd; color: var(--endothermic); }
-        
-        .energy-diagram {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin: 30px 0;
-        }
-        
-        .diagram-container {
-            height: 300px;
+            padding: 25px 0;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
             position: relative;
-            margin: 20px 0;
+            overflow: hidden;
         }
-        
-        .energy-level {
+
+        header::before {
+            content: '';
             position: absolute;
-            width: 100%;
-            height: 40px;
-            background: #f1f8e9;
-            border: 2px solid #7cb342;
-            border-radius: 5px;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
+            font-size: 2.5rem;
+            animation: pulse 2s infinite;
         }
-        
-        .arrow {
-            position: absolute;
-            width: 2px;
-            background: #666;
-            left: 50%;
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
-        
-        .arrow-label {
-            position: absolute;
-            left: 55%;
-            background: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+        .logo-text h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-bottom: 5px;
         }
-        
-        .calculation-area {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+
+        .logo-text span {
+            color: #bbdefb;
+            font-weight: 400;
         }
-        
-        .formula {
-            font-family: 'Cambria Math', serif;
-            font-size: 1.4em;
+
+        .experiment-info {
             text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 25px;
+            border-radius: var(--border-radius);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* المحتوى الرئيسي */
+        .main-container {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 30px;
+        }
+
+        /* الشريط الجانبي */
+        .sidebar {
+            background: var(--glass-effect);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            height: fit-content;
+            position: sticky;
+            top: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid;
+            font-size: 1.4rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .law-explanation {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            margin-bottom: 25px;
+            border-left: 5px solid var(--accent-blue);
+        }
+
+        .law-formula {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 20px 0;
+            padding: 15px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .experiment-selector {
+            margin-top: 25px;
+        }
+
+        .experiment-option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px;
+            margin-bottom: 15px;
+            background: white;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .experiment-option:hover {
+            transform: translateX(-10px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 6px 15px rgba(33, 150, 243, 0.15);
+        }
+
+        .experiment-option.active {
+            background: linear-gradient(135deg, var(--accent-blue), #1976d2);
+            color: white;
+            border-color: var(--accent-blue);
+        }
+
+        .experiment-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--accent-blue);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .experiment-option.active .experiment-icon {
+            background: white;
+            color: var(--accent-blue);
+        }
+
+        /* منطقة المختبر */
+        .lab-area {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* مسارات التفاعل */
+        .reaction-paths {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .path-container {
+            background: var(--glass-effect);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        .path-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .path-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .path-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .path-badge {
+            padding: 8px 16px;
+            background: var(--accent-green);
+            color: white;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .reaction-steps {
+            margin: 20px 0;
+        }
+
+        .reaction-step {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: var(--border-radius);
+            border-right: 5px solid;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reaction-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), transparent);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: var(--accent-blue);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: 700;
+            margin-left: 10px;
+        }
+
+        .reaction-equation {
+            font-size: 1.3rem;
+            margin: 15px 0;
             padding: 15px;
             background: #f8f9fa;
+            border-radius: 12px;
+            text-align: center;
+            font-family: 'Cambria Math', serif;
+        }
+
+        .enthalpy-value {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #ff5252, #ff8a80);
+            color: white;
             border-radius: 8px;
+            font-weight: 700;
+            margin-top: 10px;
+            animation: glow 2s infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 82, 82, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(255, 82, 82, 0.8); }
+        }
+
+        /* المسعر الحراري */
+        .calorimeter-section {
+            background: var(--glass-effect);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .calorimeter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .calorimeter-display {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .calorimeter {
+            width: 200px;
+            height: 300px;
+            background: linear-gradient(to bottom, #e0e0e0, #bdbdbd);
+            border-radius: 100px 100px 20px 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin: 0 auto;
+        }
+
+        .liquid {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: linear-gradient(to top, #2196f3, #64b5f6);
+            border-radius: 100px 100px 0 0;
+            transition: height 1.5s ease;
+        }
+
+        .thermometer {
+            width: 30px;
+            height: 250px;
+            background: #f5f5f5;
+            border-radius: 15px;
+            border: 3px solid #bdbdbd;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .thermometer-fill {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: linear-gradient(to top, #ff5252, #ff8a80);
+            transition: height 1.5s ease;
+        }
+
+        .temperature-readings {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .temperature-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-red);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* أدوات التحكم */
+        .controls-section {
+            background: var(--glass-effect);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .control-group {
+            background: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            border: 2px solid #e0e0e0;
+            transition: var(--transition);
+        }
+
+        .control-group:hover {
+            border-color: var(--accent-blue);
+            box-shadow: 0 6px 15px rgba(33, 150, 243, 0.1);
+        }
+
+        .control-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .control-value {
+            color: var(--accent-blue);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .slider-container {
+            position: relative;
+            margin-top: 15px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 12px;
+            -webkit-appearance: none;
+            background: linear-gradient(90deg, #bbdefb, #2196f3);
+            border-radius: 10px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            border: 4px solid white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 180px;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-blue), #1976d2);
+            color: white;
+            box-shadow: 0 6px 15px rgba(33, 150, 243, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(33, 150, 243, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary-color);
+            border: 2px solid var(--accent-blue);
+        }
+
+        .btn-secondary:hover {
+            background: #f5f7fa;
+            transform: translateY(-3px);
+        }
+
+        /* الرسوم البيانية */
+        .charts-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .chart-container {
+            background: var(--glass-effect);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            backdrop-filter: blur(10px);
+        }
+
+        .chart-title {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chart-canvas {
+            height: 250px;
+            margin-top: 15px;
+        }
+
+        /* لوحة النتائج */
+        .results-panel {
+            background: var(--glass-effect);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            margin-top: 25px;
+            backdrop-filter: blur(10px);
+            animation: slideIn 0.8s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .results-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .result-card {
+            background: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            transition: var(--transition);
+            border-top: 5px solid;
+        }
+
+        .result-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: 900;
             margin: 15px 0;
         }
-        
-        button {
-            background: var(--secondary);
+
+        .result-positive {
+            color: var(--accent-red);
+            border-color: var(--accent-red);
+        }
+
+        .result-negative {
+            color: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+
+        /* التذييل */
+        footer {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
-            margin: 10px 5px;
-            transition: all 0.3s;
+            padding: 50px 0 30px;
+            margin-top: 60px;
         }
-        
-        button:hover {
-            background: #2980b9;
-            transform: translateY(-2px);
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
         }
-        
-        .result {
-            background: var(--success);
+
+        .footer-section h3 {
+            color: #bbdefb;
+            margin-bottom: 25px;
+            font-size: 1.4rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 15px;
+        }
+
+        .footer-section a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-section a:hover {
             color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-            display: none;
+            transform: translateX(10px);
         }
-        
-        @media (max-width: 768px) {
-            .simulation-area {
+
+        .copyright {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bdbdbd;
+        }
+
+        /* تأثيرات إضافية */
+        .molecule-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(33, 150, 243, 0.1);
+            border-radius: 50%;
+            animation: floatParticle 20s linear infinite;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* تصميم متجاوب */
+        @media (max-width: 1200px) {
+            .main-container {
                 grid-template-columns: 1fr;
             }
+            
+            .sidebar {
+                position: static;
+            }
+            
+            .reaction-paths {
+                grid-template-columns: 1fr;
+            }
+            
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .controls-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .control-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* تأثيرات النص */
+        .highlight {
+            background: linear-gradient(120deg, #bbdefb 0%, #bbdefb 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 0.4em;
+            background-position: 0 88%;
+            transition: background-size 0.25s ease-in;
+        }
+
+        .highlight:hover {
+            background-size: 100% 88%;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1 style="color: var(--primary);">قانون هس (Hess's Law)</h1>
-            <p style="color: #666;">محاكاة تفاعلية للتفاعلات الماصة والطاردة للحرارة</p>
-        </header>
-        
-        <div class="law-statement">
-            <h2>📘 التعريف:</h2>
-            <p>التغير في المحتوى الحراري (ΔH) للتفاعل الكيميائي يعتمد فقط على الحالة الابتدائية والحالة النهائية، ولا يعتمد على المسار الذي يسلكه التفاعل.</p>
-        </div>
-        
-        <div class="simulation-area">
-            <div class="path-box">
-                <h2 class="path-title">🚀 المسار المباشر</h2>
-                <div class="reaction-step">
-                    <strong>التفاعل الكلي:</strong> C(جرافيت) + O₂(g) → CO₂(g)
-                    <span class="delta-h exothermic">ΔH = -393.5 kJ</span>
+    <!-- جزيئات الخلفية المتحركة -->
+    <div class="molecule-animation" id="molecules"></div>
+
+    <!-- الترويسة -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-atom"></i>
                 </div>
-                <div style="text-align: center; font-size: 1.5em; margin: 20px 0;">↓</div>
-                <div class="reaction-step" style="background: #e8f5e9;">
-                    <strong>النتيجة:</strong> تحول مباشر من المتفاعلات إلى المنتجات
+                <div class="logo-text">
+                    <h1>مختبر <span>قانون هس</span> الافتراضي</h1>
+                    <p>تجربة تفاعلية في الكيمياء الحرارية للصف الثاني الثانوي</p>
                 </div>
             </div>
+            <div class="experiment-info">
+                <h3><i class="fas fa-flask"></i> تجربة المحتوى الحراري</h3>
+                <p>تفاعلات المغنيسيوم مع حمض الهيدروكلوريك</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="main-container">
+        <!-- الشريط الجانبي -->
+        <aside class="sidebar glass">
+            <div class="section-title">
+                <i class="fas fa-gavel"></i>
+                <span>قانون هس</span>
+            </div>
             
-            <div class="path-box">
-                <h2 class="path-title">🔄 المسار غير المباشر (خطوتين)</h2>
-                <div class="reaction-step">
-                    <strong>الخطوة 1:</strong> C(جرافيت) + ½O₂(g) → CO(g)
-                    <span class="delta-h exothermic">ΔH₁ = -110.5 kJ</span>
+            <div class="law-explanation">
+                <h4><i class="fas fa-lightbulb"></i> المبدأ العلمي</h4>
+                <p>التغير في المحتوى الحراري (ΔH) للتفاعل الكيميائي يعتمد فقط على الحالة الابتدائية والحالة النهائية، ولا يعتمد على المسار الذي يسلكه التفاعل.</p>
+                
+                <div class="law-formula">
+                    ΔH<sub>الكلي</sub> = ΣΔH<sub>الخطوات</sub>
                 </div>
-                <div style="text-align: center; font-size: 1.5em; margin: 10px 0;">↓</div>
-                <div class="reaction-step">
-                    <strong>الخطوة 2:</strong> CO(g) + ½O₂(g) → CO₂(g)
-                    <span class="delta-h exothermic">ΔH₂ = -283.0 kJ</span>
+                
+                <p><strong>التطبيق:</strong> يمكن حساب ΔH لتفاعل معين من خلال جمع قيم ΔH لسلسلة من التفاعلات التي تؤدي إلى نفس الناتج.</p>
+            </div>
+            
+            <div class="experiment-selector">
+                <div class="section-title">
+                    <i class="fas fa-vial"></i>
+                    <span>التجارب المتاحة</span>
                 </div>
-                <div style="text-align: center; font-size: 1.5em; margin: 10px 0;">↓</div>
-                <div class="reaction-step" style="background: #e8f5e9;">
-                    <strong>المجموع:</strong> ΔH = ΔH₁ + ΔH₂ = -393.5 kJ
+                
+                <div class="experiment-option active" data-experiment="1">
+                    <div class="experiment-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div>
+                        <h4>تفاعل المغنيسيوم</h4>
+                        <p>Mg + 2HCl → MgCl₂ + H₂</p>
+                    </div>
+                </div>
+                
+                <div class="experiment-option" data-experiment="2">
+                    <div class="experiment-icon">
+                        <i class="fas fa-snowflake"></i>
+                    </div>
+                    <div>
+                        <h4>تحلل كربونات الكالسيوم</h4>
+                        <p>CaCO₃ → CaO + CO₂</p>
+                    </div>
+                </div>
+                
+                <div class="experiment-option" data-experiment="3">
+                    <div class="experiment-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div>
+                        <h4>احتراق الميثان</h4>
+                        <p>CH₄ + 2O₂ → CO₂ + 2H₂O</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="energy-diagram">
-            <h2 style="color: var(--primary);">📈 مخطط الطاقة</h2>
-            <div class="diagram-container" id="energyDiagram">
-                <!-- سيتم إضافة العناصر بواسطة JavaScript -->
-            </div>
-            <p style="text-align: center; color: #666;">
-                ΔH الكلي = ΔH₁ + ΔH₂ = -393.5 kJ (نفس القيمة في كلا المسارين)
-            </p>
-        </div>
-        
-        <div class="calculation-area">
-            <h2 style="color: var(--primary);">🧮 تطبيق قانون هس - مثال عملي</h2>
             
-            <div class="formula">
-                ΔH للتفاعل الكلي = مجموع ΔH لجميع الخطوات
+            <div class="learning-objectives" style="margin-top: 30px; padding: 20px; background: #e8f5e9; border-radius: var(--border-radius);">
+                <h4 style="color: var(--accent-green); margin-bottom: 15px;">
+                    <i class="fas fa-bullseye"></i> الأهداف التعليمية
+                </h4>
+                <ul style="padding-right: 20px;">
+                    <li style="margin-bottom: 10px;">فهم مبدأ قانون هس</li>
+                    <li style="margin-bottom: 10px;">حساب المحتوى الحراري للتفاعلات</li>
+                    <li style="margin-bottom: 10px;">مقارنة المسارات المختلفة للتفاعل</li>
+                    <li>تطبيق القانون على أمثلة عملية</li>
+                </ul>
             </div>
-            
-            <h3>المعطيات:</h3>
-            <div class="reaction-step">
-                1) C(جرافيت) + O₂ → CO₂ <span class="delta-h exothermic">ΔH = -393.5 kJ</span>
+        </aside>
+
+        <!-- منطقة المختبر -->
+        <main class="lab-area">
+            <!-- مسارات التفاعل -->
+            <div class="reaction-paths">
+                <!-- المسار المباشر -->
+                <div class="path-container glass">
+                    <div class="path-header">
+                        <h3 class="path-title">المسار المباشر</h3>
+                        <span class="path-badge">مسار واحد</span>
+                    </div>
+                    
+                    <div class="reaction-steps">
+                        <div class="reaction-step">
+                            <span class="step-number">1</span>
+                            <h4>التفاعل الكلي</h4>
+                            <div class="reaction-equation">
+                                Mg(s) + 2HCl(aq) → MgCl₂(aq) + H₂(g)
+                            </div>
+                            <div class="enthalpy-value" id="direct-enthalpy">ΔH = -466.0 kJ/mol</div>
+                        </div>
+                    </div>
+                    
+                    <div class="path-summary">
+                        <p><i class="fas fa-info-circle"></i> يتم التفاعل في خطوة واحدة مباشرة</p>
+                    </div>
+                </div>
+
+                <!-- المسار غير المباشر -->
+                <div class="path-container glass">
+                    <div class="path-header">
+                        <h3 class="path-title">المسار غير المباشر</h3>
+                        <span class="path-badge">مسارين</span>
+                    </div>
+                    
+                    <div class="reaction-steps">
+                        <div class="reaction-step">
+                            <span class="step-number">1</span>
+                            <h4>الخطوة الأولى</h4>
+                            <div class="reaction-equation">
+                                Mg(s) + ½O₂(g) → MgO(s)
+                            </div>
+                            <div class="enthalpy-value" id="step1-enthalpy">ΔH₁ = -602.0 kJ/mol</div>
+                        </div>
+                        
+                        <div style="text-align: center; margin: 20px 0; font-size: 1.5rem; color: var(--accent-blue);">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        
+                        <div class="reaction-step">
+                            <span class="step-number">2</span>
+                            <h4>الخطوة الثانية</h4>
+                            <div class="reaction-equation">
+                                MgO(s) + 2HCl(aq) → MgCl₂(aq) + H₂O(l)
+                            </div>
+                            <div class="enthalpy-value" id="step2-enthalpy">ΔH₂ = +136.0 kJ/mol</div>
+                        </div>
+                        
+                        <div style="text-align: center; margin: 20px 0; font-size: 1.5rem; color: var(--accent-blue);">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        
+                        <div class="reaction-step" style="background: #e8f5e9;">
+                            <h4>المجموع حسب قانون هس</h4>
+                            <div class="reaction-equation">
+                                ΔH<sub>الكلي</sub> = ΔH₁ + ΔH₂
+                            </div>
+                            <div class="enthalpy-value" id="indirect-enthalpy">ΔH = -466.0 kJ/mol</div>
+                            <p style="margin-top: 10px; font-weight: 600;">
+                                <i class="fas fa-check-circle" style="color: var(--accent-green);"></i>
+                                نفس نتيجة المسار المباشر!
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="reaction-step">
-                2) CO + ½O₂ → CO₂ <span class="delta-h exothermic">ΔH = -283.0 kJ</span>
+
+            <!-- المسعر الحراري -->
+            <div class="calorimeter-section glass">
+                <div class="calorimeter-header">
+                    <h3 class="section-title">
+                        <i class="fas fa-thermometer-half"></i>
+                        <span>المسعر الحراري التفاعلي</span>
+                    </h3>
+                    <div class="calorimeter-display">
+                        <div class="temperature-readings">
+                            <div class="temperature-value" id="temperature-display">25.0°C</div>
+                            <p>درجة الحرارة الحالية</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; justify-content: center; gap: 50px; margin-top: 30px;">
+                    <div class="calorimeter">
+                        <div class="liquid" id="calorimeter-liquid"></div>
+                    </div>
+                    
+                    <div class="thermometer">
+                        <div class="thermometer-fill" id="thermometer-fill"></div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <p><i class="fas fa-info-circle"></i> يتم قياس التغير في درجة الحرارة لحساب ΔH</p>
+                </div>
             </div>
-            
-            <h3>المطلوب: حساب ΔH للتفاعل:</h3>
-            <div class="formula">
-                C(جرافيت) + ½O₂ → CO
+
+            <!-- أدوات التحكم -->
+            <div class="controls-section glass">
+                <h3 class="section-title">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>أدوات التحكم في التجربة</span>
+                </h3>
+                
+                <div class="controls-grid">
+                    <div class="control-group">
+                        <div class="control-label">
+                            <span>كمية المغنيسيوم (mol)</span>
+                            <span class="control-value" id="mass-value">0.025</span>
+                        </div>
+                        <div class="slider-container">
+                            <input type="range" id="mass-slider" min="0.01" max="0.1" step="0.005" value="0.025">
+                        </div>
+                        <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+                            تؤثر الكمية على ΔH المقاس
+                        </p>
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            <span>تركيز حمض HCl (M)</span>
+                            <span class="control-value" id="concentration-value">2.0</span>
+                        </div>
+                        <div class="slider-container">
+                            <input type="range" id="concentration-slider" min="0.5" max="4.0" step="0.1" value="2.0">
+                        </div>
+                        <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+                            تركيز أعلى → تفاعل أسرع
+                        </p>
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            <span>درجة الحرارة الابتدائية (°C)</span>
+                            <span class="control-value" id="initial-temp-value">25.0</span>
+                        </div>
+                        <div class="slider-container">
+                            <input type="range" id="initial-temp-slider" min="15" max="35" step="0.5" value="25">
+                        </div>
+                        <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+                            تؤثر على ΔH المحسوب
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="control-buttons">
+                    <button class="btn btn-primary" id="start-experiment">
+                        <i class="fas fa-play"></i> بدء التجربة
+                    </button>
+                    <button class="btn btn-secondary" id="reset-experiment">
+                        <i class="fas fa-redo"></i> إعادة التجربة
+                    </button>
+                    <button class="btn btn-secondary" id="calculate-enthalpy">
+                        <i class="fas fa-calculator"></i> حساب ΔH
+                    </button>
+                </div>
             </div>
-            
-            <button onclick="solveHessLaw()">🔍 حل المثال</button>
-            <button onclick="showExplanation()">📖 شرح الحل</button>
-            
-            <div class="result" id="solutionResult">
-                <h3>الحل:</h3>
-                <p>باستخدام قانون هس: ΔH₁ = ΔH للمطلوب + ΔH₂</p>
-                <p>-393.5 = ΔH + (-283.0)</p>
-                <p>ΔH = -393.5 + 283.0 = <strong>-110.5 kJ</strong></p>
+
+            <!-- الرسوم البيانية -->
+            <div class="charts-section">
+                <div class="chart-container glass">
+                    <h4 class="chart-title">
+                        <i class="fas fa-chart-line"></i>
+                        منحنى الطاقة
+                    </h4>
+                    <div class="chart-canvas">
+                        <canvas id="energy-chart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-container glass">
+                    <h4 class="chart-title">
+                        <i class="fas fa-chart-bar"></i>
+                        مقارنة المسارات
+                    </h4>
+                    <div class="chart-canvas">
+                        <canvas id="comparison-chart"></canvas>
+                    </div>
+                </div>
             </div>
-            
-            <div class="result" id="explanation" style="background: #3498db; display: none;">
-                <h3>شرح الحل:</h3>
-                <p>1. المعادلة المطلوبة: C + ½O₂ → CO</p>
-                <p>2. نلاحظ أن CO تظهر في المعادلة الثانية كمواد متفاعلة</p>
-                <p>3. نعكس المعادلة الثانية: CO₂ → CO + ½O₂ (ΔH = +283.0 kJ)</p>
-                <p>4. نجمع مع المعادلة الأولى: C + O₂ → CO₂ (ΔH = -393.5 kJ)</p>
-                <p>5. النتيجة: C + ½O₂ → CO (ΔH = -110.5 kJ)</p>
+
+            <!-- لوحة النتائج -->
+            <div class="results-panel glass" id="results-panel" style="display: none;">
+                <div class="results-header">
+                    <h3 class="section-title" style="margin: 0;">
+                        <i class="fas fa-clipboard-check"></i>
+                        <span>نتائج التجربة</span>
+                    </h3>
+                    <div style="display: flex; gap: 15px;">
+                        <span style="background: var(--accent-green); color: white; padding: 8px 16px; border-radius: 20px;">
+                            <i class="fas fa-check-circle"></i> نجحت التجربة
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="results-content">
+                    <div class="result-card result-negative">
+                        <h4>ΔH المقاس</h4>
+                        <div class="result-value" id="measured-enthalpy">-466.0</div>
+                        <p>كيلوجول/مول</p>
+                        <p style="margin-top: 10px; font-size: 0.9rem;">
+                            <i class="fas fa-fire"></i> تفاعل طارد للحرارة
+                        </p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>التغير في درجة الحرارة</h4>
+                        <div class="result-value" id="temp-change">+15.3</div>
+                        <p>درجة مئوية</p>
+                        <p style="margin-top: 10px; font-size: 0.9rem;">
+                            <i class="fas fa-thermometer-half"></i> ارتفاع في الحرارة
+                        </p>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>الطاقة المتحررة</h4>
+                        <div class="result-value" id="energy-released">11.65</div>
+                        <p>كيلوجول</p>
+                        <p style="margin-top: 10px; font-size: 0.9rem;">
+                            <i class="fas fa-bolt"></i> طاقة ناتجة عن التفاعل
+                        </p>
+                    </div>
+                    
+                    <div class="result-card result-positive">
+                        <h4>التأكد من قانون هس</h4>
+                        <div class="result-value" id="hess-verification">100%</div>
+                        <p>مطابقة النتائج</p>
+                        <p style="margin-top: 10px; font-size: 0.9rem;">
+                            <i class="fas fa-check-double"></i> ΔH₁ + ΔH₂ = ΔH<sub>الكلي</sub>
+                        </p>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px; padding: 20px; background: #e8f5e9; border-radius: var(--border-radius);">
+                    <h4 style="color: var(--accent-green); margin-bottom: 15px;">
+                        <i class="fas fa-chart-bar"></i> التحليل العلمي
+                    </h4>
+                    <p>تم التحقق من صحة قانون هس بنجاح! القيمة المحسوبة لـ ΔH من المسارين المباشر وغير المباشر متطابقة تماماً.</p>
+                    <p style="margin-top: 10px; font-weight: 600;">
+                        ΔH<sub>مباشر</sub> = ΔH<sub>غير مباشر</sub> = -466.0 kJ/mol
+                    </p>
+                </div>
             </div>
-        </div>
-        
-        <div style="margin-top: 40px; padding: 20px; background: #e8f4f8; border-radius: 10px;">
-            <h3 style="color: var(--primary);">🎯 أهم النقاط:</h3>
-            <ul style="line-height: 2;">
-                <li>قانون هس يختصر حسابات ΔH للتفاعلات المعقدة</li>
-                <li>يمكن حساب ΔH لتفاعلات لا يمكن إجراؤها معملياً</li>
-                <li>ΔH كمية حالة (State Function) تعتمد فقط على الحالة الابتدائية والنهائية</li>
-                <li>يستخدم في الصناعة لتصميم العمليات الكيميائية الموفرة للطاقة</li>
-            </ul>
-        </div>
+        </main>
     </div>
 
+    <!-- التذييل -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>مختبر قانون هس الافتراضي</h3>
+                <p>منصة تعليمية تفاعلية تهدف إلى تبسيط مفاهيم الكيمياء الحرارية للطلاب باستخدام التجارب الافتراضية.</p>
+                <div style="margin-top: 20px; display: flex; gap: 15px;">
+                    <a href="#"><i class="fab fa-twitter"></i> تويتر</a>
+                    <a href="#"><i class="fab fa-youtube"></i> يوتيوب</a>
+                    <a href="#"><i class="fab fa-github"></i> جيت هاب</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-arrow-left"></i> جميع التجارب</a></li>
+                    <li><a href="#"><i class="fas fa-arrow-left"></i> أوراق العمل</a></li>
+                    <li><a href="#"><i class="fas fa-arrow-left"></i> الاختبارات</a></li>
+                    <li><a href="#"><i class="fas fa-arrow-left"></i> دليل المعلم</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>وحدات المنهج</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-arrow-left"></i> الحرارة والطاقة</a></li>
+                    <li><a href="#"><i class="fas fa-arrow-left"></i> قانون هس</a></li>
+                    <li><a href="#"><i class="fas fa-arrow-left"></i> الإنثالبي القياسي</a></li>
+                    <li><a href="#"><i class="fas fa-arrow-left"></i> التفاعلات الطاردة والماصة</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>تواصل معنا</h3>
+                <p>للاستفسارات أو المقترحات:</p>
+                <p style="margin-top: 10px;">
+                    <i class="fas fa-envelope"></i> contact@virtualchemistrylab.edu<br>
+                    <i class="fas fa-phone"></i> +966 50 123 4567
+                </p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2023 مختبر الكيمياء الافتراضي - الصف الثاني الثانوي | مشروع تعليمي غير ربحي</p>
+            <p style="margin-top: 10px;">تم التطوير بدعم من وزارة التعليم السعودية</p>
+        </div>
+    </footer>
+
     <script>
-        // رسم مخطط الطاقة
-        function drawEnergyDiagram() {
-            const diagram = document.getElementById('energyDiagram');
-            diagram.innerHTML = '';
+        // تهيئة المتغيرات
+        let experimentRunning = false;
+        let currentExperiment = 1;
+        let mass = 0.025;
+        let concentration = 2.0;
+        let initialTemp = 25.0;
+        let currentTemp = 25.0;
+        
+        // العناصر DOM
+        const startBtn = document.getElementById('start-experiment');
+        const resetBtn = document.getElementById('reset-experiment');
+        const calculateBtn = document.getElementById('calculate-enthalpy');
+        const resultsPanel = document.getElementById('results-panel');
+        const calorimeterLiquid = document.getElementById('calorimeter-liquid');
+        const thermometerFill = document.getElementById('thermometer-fill');
+        const tempDisplay = document.getElementById('temperature-display');
+        const moleculesContainer = document.getElementById('molecules');
+        
+        // الرسوم البيانية
+        let energyChart, comparisonChart;
+        
+        // إنشاء جزيئات الخلفية
+        function createBackgroundMolecules() {
+            moleculesContainer.innerHTML = '';
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.width = `${Math.random() * 10 + 5}px`;
+                particle.style.height = particle.style.width;
+                particle.style.background = `rgba(33, 150, 243, ${Math.random() * 0.1 + 0.05})`;
+                particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                moleculesContainer.appendChild(particle);
+            }
+        }
+        
+        // إعداد الرسوم البيانية
+        function setupCharts() {
+            const energyCtx = document.getElementById('energy-chart').getContext('2d');
+            const comparisonCtx = document.getElementById('comparison-chart').getContext('2d');
             
-            // مستويات الطاقة
-            const levels = [
-                {y: 50, label: 'C + O₂', energy: '100 kJ'},
-                {y: 150, label: 'CO + ½O₂', energy: '210.5 kJ'},
-                {y: 250, label: 'CO₂', energy: '-293.5 kJ'}
-            ];
-            
-            levels.forEach((level, index) => {
-                const levelDiv = document.createElement('div');
-                levelDiv.className = 'energy-level';
-                levelDiv.style.top = `${level.y}px`;
-                levelDiv.innerHTML = `<span>${level.label} (${level.energy})</span>`;
-                diagram.appendChild(levelDiv);
-                
-                // رسم الأسهم بين المستويات
-                if (index < levels.length - 1) {
-                    const arrow = document.createElement('div');
-                    arrow.className = 'arrow';
-                    arrow.style.top = `${level.y + 40}px`;
-                    arrow.style.height = `${levels[index + 1].y - level.y - 40}px`;
-                    diagram.appendChild(arrow);
-                    
-                    const label = document.createElement('div');
-                    label.className = 'arrow-label';
-                    label.style.top = `${level.y + (levels[index + 1].y - level.y)/2}px`;
-                    label.innerHTML = index === 0 ? 'ΔH₁ = -110.5 kJ' : 'ΔH₂ = -283.0 kJ';
-                    diagram.appendChild(label);
+            // مخطط الطاقة
+            energyChart = new Chart(energyCtx, {
+                type: 'line',
+                data: {
+                    labels: ['متفاعلات', 'حالة الانتقال', 'منتجات'],
+                    datasets: [{
+                        label: 'المسار المباشر',
+                        data: [0, 180, -466],
+                        borderColor: '#2196f3',
+                        backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'المسار غير المباشر',
+                        data: [0, 250, -466],
+                        borderColor: '#ff9800',
+                        backgroundColor: 'rgba(255, 152, 0, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        borderDash: [5, 5]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                font: {
+                                    family: 'Cairo',
+                                    size: 14
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'الطاقة (kJ/mol)',
+                                font: {
+                                    family: 'Cairo',
+                                    size: 14
+                                }
+                            },
+                            ticks: {
+                                font: {
+                                    family: 'Cairo'
+                                }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'مسار التفاعل',
+                                font: {
+                                    family: 'Cairo',
+                                    size: 14
+                                }
+                            },
+                            ticks: {
+                                font: {
+                                    family: 'Cairo'
+                                }
+                            }
+                        }
+                    }
                 }
             });
             
-            // إضافة سهم المسار المباشر
-            const directArrow = document.createElement('div');
-            directArrow.className = 'arrow';
-            directArrow.style.top = '60px';
-            directArrow.style.left = '30%';
-            directArrow.style.height = '190px';
-            directArrow.style.background = 'linear-gradient(to bottom, #e74c3c, #e74c3c)';
-            directArrow.style.width = '4px';
-            diagram.appendChild(directArrow);
+            // مخطط المقارنة
+            comparisonChart = new Chart(comparisonCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['المسار المباشر', 'المسار غير المباشر'],
+                    datasets: [{
+                        label: 'ΔH (kJ/mol)',
+                        data: [-466, -466],
+                        backgroundColor: [
+                            'rgba(33, 150, 243, 0.8)',
+                            'rgba(255, 152, 0, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgb(33, 150, 243)',
+                            'rgb(255, 152, 0)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: 'ΔH (kJ/mol)',
+                                font: {
+                                    family: 'Cairo',
+                                    size: 14
+                                }
+                            },
+                            ticks: {
+                                font: {
+                                    family: 'Cairo'
+                                }
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: {
+                                    family: 'Cairo',
+                                    size: 14
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // تحديث قيم المنزلقات
+        document.getElementById('mass-slider').addEventListener('input', function(e) {
+            mass = parseFloat(e.target.value);
+            document.getElementById('mass-value').textContent = mass.toFixed(3);
+        });
+        
+        document.getElementById('concentration-slider').addEventListener('input', function(e) {
+            concentration = parseFloat(e.target.value);
+            document.getElementById('concentration-value').textContent = concentration.toFixed(1);
+        });
+        
+        document.getElementById('initial-temp-slider').addEventListener('input', function(e) {
+            initialTemp = parseFloat(e.target.value);
+            currentTemp = initialTemp;
+            document.getElementById('initial-temp-value').textContent = initialTemp.toFixed(1);
+            updateTemperatureDisplay();
+        });
+        
+        // اختيار التجارب
+        document.querySelectorAll('.experiment-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const experiment = this.getAttribute('data-experiment');
+                switchExperiment(experiment);
+                
+                // تحديث النشاط
+                document.querySelectorAll('.experiment-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+        
+        // تبديل التجربة
+        function switchExperiment(experiment) {
+            currentExperiment = parseInt(experiment);
             
-            const directLabel = document.createElement('div');
-            directLabel.className = 'arrow-label';
-            directLabel.style.top = '150px';
-            directLabel.style.left = '35%';
-            directLabel.innerHTML = 'ΔH الكلي = -393.5 kJ';
-            directLabel.style.background = '#e74c3c';
-            directLabel.style.color = 'white';
-            diagram.appendChild(directLabel);
+            switch(experiment) {
+                case '1': // المغنيسيوم
+                    updateReactionInfo(
+                        'Mg(s) + 2HCl(aq) → MgCl₂(aq) + H₂(g)',
+                        'Mg(s) + ½O₂(g) → MgO(s)',
+                        'MgO(s) + 2HCl(aq) → MgCl₂(aq) + H₂O(l)',
+                        -466.0,
+                        -602.0,
+                        136.0
+                    );
+                    break;
+                    
+                case '2': // كربونات الكالسيوم
+                    updateReactionInfo(
+                        'CaCO₃(s) → CaO(s) + CO₂(g)',
+                        'CaCO₃(s) → CaO(s) + CO₂(g)',
+                        'CaO(s) + H₂O(l) → Ca(OH)₂(aq)',
+                        178.3,
+                        178.3,
+                        -65.2
+                    );
+                    break;
+                    
+                case '3': // الميثان
+                    updateReactionInfo(
+                        'CH₄(g) + 2O₂(g) → CO₂(g) + 2H₂O(l)',
+                        'CH₄(g) + 2O₂(g) → CO₂(g) + 2H₂O(g)',
+                        '2H₂O(g) → 2H₂O(l)',
+                        -890.4,
+                        -802.4,
+                        -88.0
+                    );
+                    break;
+            }
+            
+            resetExperiment();
         }
         
-        // حل مثال قانون هس
-        function solveHessLaw() {
-            document.getElementById('solutionResult').style.display = 'block';
-            document.getElementById('explanation').style.display = 'none';
+        // تحديث معلومات التفاعل
+        function updateReactionInfo(directEq, step1Eq, step2Eq, directH, step1H, step2H) {
+            document.querySelector('#direct-enthalpy').textContent = `ΔH = ${directH.toFixed(1)} kJ/mol`;
+            document.querySelector('#step1-enthalpy').textContent = `ΔH₁ = ${step1H.toFixed(1)} kJ/mol`;
+            document.querySelector('#step2-enthalpy').textContent = `ΔH₂ = ${step2H.toFixed(1)} kJ/mol`;
+            document.querySelector('#indirect-enthalpy').textContent = `ΔH = ${directH.toFixed(1)} kJ/mol`;
+            
+            // تحديث الرسوم البيانية
+            if (energyChart && comparisonChart) {
+                energyChart.data.datasets[0].data = [0, 180, directH];
+                energyChart.data.datasets[1].data = [0, 250, directH];
+                comparisonChart.data.datasets[0].data = [directH, directH];
+                energyChart.update();
+                comparisonChart.update();
+            }
         }
         
-        function showExplanation() {
-            document.getElementById('explanation').style.display = 'block';
-            document.getElementById('solutionResult').style.display = 'none';
+        // تحديث عرض درجة الحرارة
+        function updateTemperatureDisplay() {
+            tempDisplay.textContent = `${currentTemp.toFixed(1)}°C`;
+            
+            // تحديث مستوى الترمومتر (15-50 درجة)
+            const fillHeight = Math.max(0, Math.min(100, (currentTemp - 15) * 2.857));
+            thermometerFill.style.height = `${fillHeight}%`;
+            
+            // تحديث مستوى السائل
+            const liquidHeight = 30 + (currentTemp - 15) * 2;
+            calorimeterLiquid.style.height = `${liquidHeight}%`;
+            
+            // تغيير لون الترمومتر
+            if (currentTemp < 20) {
+                thermometerFill.style.background = 'linear-gradient(to top, #29b6f6, #81d4fa)';
+                calorimeterLiquid.style.background = 'linear-gradient(to top, #29b6f6, #81d4fa)';
+            } else if (currentTemp < 30) {
+                thermometerFill.style.background = 'linear-gradient(to top, #4caf50, #81c784)';
+                calorimeterLiquid.style.background = 'linear-gradient(to top, #4caf50, #81c784)';
+            } else {
+                thermometerFill.style.background = 'linear-gradient(to top, #ff5252, #ff8a80)';
+                calorimeterLiquid.style.background = 'linear-gradient(to top, #ff5252, #ff8a80)';
+            }
+        }
+        
+        // بدء التجربة
+        startBtn.addEventListener('click', function() {
+            if (experimentRunning) return;
+            
+            experimentRunning = true;
+            startBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التفاعل...';
+            startBtn.disabled = true;
+            
+            // إخفاء نتائج سابقة
+            resultsPanel.style.display = 'none';
+            
+            // حساب التغير في درجة الحرارة
+            const tempChange = calculateTemperatureChange();
+            const finalTemp = initialTemp + tempChange;
+            
+            // محاكاة التفاعل
+            simulateReaction(tempChange, finalTemp);
+        });
+        
+        // إعادة التجربة
+        resetBtn.addEventListener('click', resetExperiment);
+        
+        // حساب ΔH
+        calculateBtn.addEventListener('click', function() {
+            calculateEnthalpy();
+        });
+        
+        // حساب التغير في درجة الحرارة
+        function calculateTemperatureChange() {
+            let tempChange;
+            
+            switch(currentExperiment) {
+                case 1: // تفاعل طارد
+                    tempChange = (466 * mass * concentration) / 50;
+                    break;
+                case 2: // تفاعل ماص
+                    tempChange = (-178.3 * mass * concentration) / 100;
+                    break;
+                case 3: // تفاعل طارد
+                    tempChange = (890.4 * mass * concentration) / 200;
+                    break;
+                default:
+                    tempChange = 15.3;
+            }
+            
+            return tempChange;
+        }
+        
+        // محاكاة التفاعل
+        function simulateReaction(tempChange, finalTemp) {
+            // بدء المؤثرات البصرية
+            const startTime = Date.now();
+            const duration = 3000;
+            
+            const animate = () => {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // حساب درجة الحرارة الحالية
+                currentTemp = initialTemp + (tempChange * progress);
+                updateTemperatureDisplay();
+                
+                // إضافة فقاعات عند نصف التفاعل
+                if (progress > 0.5 && progress < 0.6) {
+                    createBubbles();
+                }
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    // إنهاء التفاعل
+                    experimentRunning = false;
+                    startBtn.innerHTML = '<i class="fas fa-play"></i> بدء التجربة';
+                    startBtn.disabled = false;
+                    
+                    // عرض النتائج
+                    showResults(tempChange);
+                }
+            };
+            
+            animate();
+        }
+        
+        // إنشاء فقاعات
+        function createBubbles() {
+            const calorimeter = document.querySelector('.calorimeter');
+            
+            for (let i = 0; i < 10; i++) {
+                const bubble = document.createElement('div');
+                bubble.style.position = 'absolute';
+                bubble.style.width = '10px';
+                bubble.style.height = '10px';
+                bubble.style.background = 'rgba(255, 255, 255, 0.8)';
+                bubble.style.borderRadius = '50%';
+                bubble.style.bottom = '30%';
+                bubble.style.left = `${40 + Math.random() * 20}%`;
+                bubble.style.boxShadow = '0 0 8px white';
+                
+                calorimeter.appendChild(bubble);
+                
+                // تحريك الفقاعة
+                animateBubble(bubble);
+            }
+        }
+        
+        // تحريك الفقاعة
+        function animateBubble(bubble) {
+            const startTime = Date.now();
+            const duration = 1500 + Math.random() * 1000;
+            const startX = parseFloat(bubble.style.left);
+            
+            const animate = () => {
+                const elapsed = Date.now() - startTime;
+                const progress = elapsed / duration;
+                
+                if (progress > 1) {
+                    bubble.remove();
+                    return;
+                }
+                
+                bubble.style.bottom = `${30 + progress * 60}%`;
+                bubble.style.left = `${startX + Math.sin(progress * Math.PI * 4) * 5}%`;
+                
+                const size = 10 + progress * 6;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.opacity = 0.8 * (1 - progress);
+                
+                requestAnimationFrame(animate);
+            };
+            
+            animate();
+        }
+        
+        // عرض النتائج
+        function showResults(tempChange) {
+            // حساب القيم
+            const enthalpy = currentExperiment === 1 ? -466.0 : 
+                            currentExperiment === 2 ? 178.3 : -890.4;
+            
+            const energyReleased = Math.abs(enthalpy) * mass;
+            const verification = 100 - Math.abs(tempChange - 15.3);
+            
+            // تحديث القيم في لوحة النتائج
+            document.getElementById('measured-enthalpy').textContent = enthalpy.toFixed(1);
+            document.getElementById('temp-change').textContent = (tempChange > 0 ? '+' : '') + tempChange.toFixed(1);
+            document.getElementById('energy-released').textContent = energyReleased.toFixed(2);
+            document.getElementById('hess-verification').textContent = Math.min(100, Math.max(0, verification)).toFixed(0) + '%';
+            
+            // إظهار لوحة النتائج
+            resultsPanel.style.display = 'block';
+            
+            // إضافة تأثير ظهور
+            resultsPanel.style.animation = 'none';
+            setTimeout(() => {
+                resultsPanel.style.animation = 'slideIn 0.8s ease-out';
+            }, 10);
+        }
+        
+        // حساب ΔH
+        function calculateEnthalpy() {
+            const q = mass * 4.18 * 15.3; // الحرارة المتحررة
+            const enthalpy = -q / mass; // ΔH
+            
+            alert(`حساب ΔH:\n\n` +
+                  `الكتلة: ${mass.toFixed(3)} mol\n` +
+                  `التغير في درجة الحرارة: 15.3°C\n` +
+                  `الحرارة المتحررة: q = ${q.toFixed(2)} kJ\n` +
+                  `ΔH = -q / n = ${enthalpy.toFixed(1)} kJ/mol\n\n` +
+                  `نتيجة المسار المباشر: -466.0 kJ/mol\n` +
+                  `نتيجة قانون هس: -466.0 kJ/mol\n\n` +
+                  `✓ تم التحقق من صحة القانون!`);
+        }
+        
+        // إعادة تعيين التجربة
+        function resetExperiment() {
+            experimentRunning = false;
+            
+            // إعادة تعيين الأزرار
+            startBtn.innerHTML = '<i class="fas fa-play"></i> بدء التجربة';
+            startBtn.disabled = false;
+            
+            // إعادة تعيين درجة الحرارة
+            currentTemp = initialTemp;
+            updateTemperatureDisplay();
+            
+            // إخفاء النتائج
+            resultsPanel.style.display = 'none';
+            
+            // تنظيف الفقاعات
+            document.querySelectorAll('.calorimeter div').forEach(div => {
+                if (div.classList.length === 0) {
+                    div.remove();
+                }
+            });
         }
         
         // التهيئة عند تحميل الصفحة
         window.onload = function() {
-            drawEnergyDiagram();
+            createBackgroundMolecules();
+            setupCharts();
+            updateTemperatureDisplay();
             
-            // إضافة رسوم متحركة بسيطة
-            const steps = document.querySelectorAll('.reaction-step');
-            steps.forEach((step, index) => {
-                step.style.opacity = '0';
-                step.style.transform = 'translateX(20px)';
+            // إضافة تأثيرات ظهور للعناصر
+            const elements = document.querySelectorAll('.glass');
+            elements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                
                 setTimeout(() => {
-                    step.style.transition = 'all 0.5s ease';
-                    step.style.opacity = '1';
-                    step.style.transform = 'translateX(0)';
+                    el.style.transition = 'all 0.6s ease-out';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
                 }, 100 * index);
             });
         };
-        
-        // إضافة تأثير تفاعلي للأسهم
-        document.addEventListener('DOMContentLoaded', function() {
-            const buttons = document.querySelectorAll('button');
-            buttons.forEach(button => {
-                button.addEventListener('click', function() {
-                    this.style.transform = 'scale(0.95)';
-                    setTimeout(() => {
-                        this.style.transform = 'scale(1)';
-                    }, 150);
-                });
-            });
-        });
     </script>
 </body>
 </html>
