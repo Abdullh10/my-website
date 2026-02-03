@@ -3,165 +3,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أنشطة معلم الكيمياء - أ. عبدالله بن محمد حمدي - ١٤٤٦هـ</title>
+    <title>الأنشطة التربوية والتعليمية | أ. عبدالله بن محمد حمدي | ١٤٤٦هـ</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --accent: #1abc9c;
-            --light: #ecf0f1;
-            --dark: #2c3e50;
-            --warning: #f39c12;
-            --danger: #e74c3c;
+            --primary: #0D47A1;
+            --secondary: #42A5F5;
+            --accent: #00BCD4;
+            --success: #4CAF50;
+            --light: #E3F2FD;
+            --dark: #0D1B3E;
+            --gray: #546E7A;
+            --light-gray: #ECEFF1;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Arial', sans-serif;
         }
         
         body {
-            background-color: #f8f9fa;
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f8fafc;
             color: #333;
-            line-height: 1.6;
+            line-height: 1.8;
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
         }
         
-        /* الترويسة */
-        header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        /* الهيدر */
+        .hero-header {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
             color: white;
             padding: 40px 0;
-            text-align: center;
-            border-bottom: 5px solid var(--accent);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
         }
         
-        .profile {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 20px;
+        .hero-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: cover;
         }
         
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 5px solid white;
-            margin-bottom: 20px;
-            background-color: #fff;
+        .teacher-profile {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 60px;
-            color: var(--primary);
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
         }
         
-        .profile h1 {
+        .profile-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .teacher-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .teacher-title h1 {
             font-size: 2.2rem;
-            margin-bottom: 10px;
+            font-weight: 800;
         }
         
-        .profile p {
-            font-size: 1.2rem;
-            opacity: 0.9;
+        .badge {
+            background-color: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .teacher-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #BBDEFB;
         }
         
         .academic-year {
-            background-color: var(--accent);
-            color: white;
-            padding: 10px 30px;
-            border-radius: 30px;
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 12px 25px;
+            border-radius: 8px;
             display: inline-block;
-            font-weight: bold;
-            font-size: 1.1rem;
+            font-weight: 700;
+            font-size: 1.2rem;
             margin-top: 10px;
+            border-right: 4px solid var(--accent);
         }
         
-        /* قسم المقدمة */
-        .intro {
-            background-color: white;
-            padding: 40px;
-            margin: 40px 0;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            border-right: 5px solid var(--accent);
+        .profile-visual {
+            flex: 0 0 300px;
+            text-align: center;
         }
         
-        .intro h2 {
-            color: var(--primary);
+        .science-icon {
+            font-size: 8rem;
+            color: rgba(255, 255, 255, 0.2);
             margin-bottom: 20px;
-            border-bottom: 2px solid var(--light);
-            padding-bottom: 10px;
         }
         
-        /* أنماط البطاقات */
-        .activities-container {
+        .stats-bar {
+            display: flex;
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+        }
+        
+        .stat-label {
+            color: var(--gray);
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+        
+        /* قسم الأنشطة */
+        .activities-section {
+            padding: 60px 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-header h2 {
+            font-size: 2.2rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-header h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            right: 50%;
+            transform: translateX(50%);
+            width: 100px;
+            height: 4px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+        
+        .section-header p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 20px auto 0;
+            font-size: 1.1rem;
+        }
+        
+        .activities-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
-            margin: 40px 0;
+            margin-top: 40px;
         }
         
         .activity-card {
             background-color: white;
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
             height: 100%;
+            border-top: 5px solid var(--primary);
         }
         
         .activity-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
         }
         
         .activity-header {
             padding: 25px 25px 15px;
-            color: white;
             position: relative;
         }
         
         .activity-icon {
-            font-size: 2rem;
-            margin-bottom: 15px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: var(--primary);
         }
         
-        .activity-header h3 {
+        .activity-title {
             font-size: 1.4rem;
+            color: var(--dark);
             margin-bottom: 10px;
+            font-weight: 700;
         }
         
-        .activity-date {
-            background-color: rgba(255, 255, 255, 0.2);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            display: inline-block;
+        .activity-period {
+            color: var(--accent);
+            font-weight: 500;
+            font-size: 0.95rem;
         }
         
         .activity-body {
-            padding: 25px;
+            padding: 0 25px 25px;
         }
         
-        .activity-body p {
-            margin-bottom: 15px;
-            color: #555;
+        .activity-description {
+            color: var(--gray);
+            margin-bottom: 20px;
         }
         
         .activity-features {
-            list-style-type: none;
-            margin: 20px 0;
+            list-style: none;
         }
         
         .activity-features li {
@@ -169,425 +258,588 @@
             border-bottom: 1px dashed #eee;
             position: relative;
             padding-right: 25px;
+            color: var(--gray);
         }
         
         .activity-features li:before {
             content: "✓";
             position: absolute;
             right: 0;
-            color: var(--accent);
+            color: var(--success);
             font-weight: bold;
         }
         
         .activity-footer {
-            padding: 15px 25px;
-            background-color: #f9f9f9;
-            border-top: 1px solid #eee;
+            padding: 20px 25px;
+            background-color: var(--light-gray);
+            border-top: 1px solid #ddd;
             display: flex;
             justify-content: space-between;
+            align-items: center;
         }
         
-        .status {
+        .activity-status {
             padding: 5px 15px;
             border-radius: 20px;
             font-size: 0.85rem;
-            font-weight: bold;
+            font-weight: 500;
         }
         
-        .status.completed {
-            background-color: #d4edda;
-            color: #155724;
+        .status-completed {
+            background-color: #E8F5E9;
+            color: #2E7D32;
         }
         
-        .status.ongoing {
-            background-color: #fff3cd;
-            color: #856404;
+        .status-ongoing {
+            background-color: #FFF3E0;
+            color: #EF6C00;
         }
         
-        .status.upcoming {
-            background-color: #d1ecf1;
-            color: #0c5460;
+        .achievement-badge {
+            background-color: var(--light);
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid #BBDEFB;
         }
         
-        /* ألوان مختلفة للبطاقات */
-        .card-mawhiba {
-            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+        /* ألوان البطاقات */
+        .card-mawhiba .activity-icon {
+            background-color: #E3F2FD;
+            color: #1565C0;
         }
         
-        .card-platform {
-            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        .card-platform .activity-icon {
+            background-color: #E8F5E9;
+            color: #2E7D32;
         }
         
-        .card-science-week {
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        .card-science-week .activity-icon {
+            background-color: #FFF3E0;
+            color: #EF6C00;
         }
         
-        .card-research {
-            background: linear-gradient(135deg, #f39c12 0%, #d35400 100%);
+        .card-research .activity-icon {
+            background-color: #F3E5F5;
+            color: #7B1FA2;
         }
         
-        .card-other {
-            background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
+        .card-club .activity-icon {
+            background-color: #E0F2F1;
+            color: #00695C;
         }
         
-        .card-training {
-            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+        .card-training .activity-icon {
+            background-color: #FFF8E1;
+            color: #FF8F00;
         }
         
-        /* قسم الإحصائيات */
-        .stats {
+        /* قسم التقنيات */
+        .technologies-section {
+            background-color: var(--light);
+            padding: 60px 0;
+            margin: 60px 0;
+        }
+        
+        .tech-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 50px 0;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
         }
         
-        .stat-card {
+        .tech-card {
             background-color: white;
-            padding: 30px 20px;
-            border-radius: 10px;
+            padding: 25px;
+            border-radius: 12px;
             text-align: center;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            border-top: 4px solid var(--secondary);
+            transition: all 0.3s ease;
         }
         
-        .stat-number {
+        .tech-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tech-icon {
             font-size: 2.5rem;
-            font-weight: bold;
             color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .tech-name {
+            font-weight: 700;
+            color: var(--dark);
             margin-bottom: 10px;
         }
         
-        .stat-text {
-            color: #666;
-            font-size: 1.1rem;
+        .tech-description {
+            color: var(--gray);
+            font-size: 0.95rem;
         }
         
-        /* التذييل */
+        /* الفوتر */
         footer {
-            background-color: var(--primary);
+            background-color: var(--dark);
             color: white;
-            padding: 40px 0;
-            margin-top: 60px;
-            text-align: center;
+            padding: 50px 0 30px;
         }
         
-        .contact-info {
+        .footer-content {
             display: flex;
-            justify-content: center;
             flex-wrap: wrap;
-            gap: 30px;
-            margin-top: 20px;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 40px;
         }
         
-        .contact-item {
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+        
+        .contact-list {
+            list-style: none;
+        }
+        
+        .contact-list li {
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
         
         .copyright {
-            margin-top: 30px;
-            padding-top: 20px;
+            text-align: center;
+            padding-top: 30px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            opacity: 0.8;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
         }
         
-        /* التجاوب مع الأجهزة المحمولة */
-        @media (max-width: 768px) {
-            .activities-container {
-                grid-template-columns: 1fr;
+        /* التجاوب مع الشاشات الصغيرة */
+        @media (max-width: 992px) {
+            .teacher-profile {
+                flex-direction: column;
+                text-align: center;
             }
             
-            .profile h1 {
+            .teacher-title {
+                justify-content: center;
+            }
+            
+            .activities-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .section-header h2 {
                 font-size: 1.8rem;
             }
             
-            .intro, .activity-body {
-                padding: 25px;
-            }
-            
-            .stats {
+            .activities-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .teacher-title h1 {
+                font-size: 1.8rem;
+            }
+            
+            .profile-visual {
+                flex: 0 0 auto;
+            }
+            
+            .science-icon {
+                font-size: 6rem;
+            }
+        }
+        
+        /* تأثيرات الظهور */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
-    <!-- الترويسة -->
-    <header>
+    <!-- الهيدر الرئيسي -->
+    <header class="hero-header">
         <div class="container">
-            <div class="profile">
-                <div class="profile-img">
-                    <i class="fas fa-flask"></i>
+            <div class="teacher-profile">
+                <div class="profile-info">
+                    <div class="teacher-title">
+                        <h1>أ. عبدالله بن محمد حمدي</h1>
+                        <span class="badge">معلم متقدم تربوي</span>
+                    </div>
+                    <p class="teacher-subtitle">مُعلّم كيمياء | مُبرمج تعليمي | خبير تقنيات تربوية</p>
+                    <p>متخصص في تصميم وتنفيذ الأنشطة التعليمية المبتكرة التي تدمج بين الكيمياء والتقنية لتعزيز تجربة التعلّم.</p>
+                    <div class="academic-year">العام الدراسي ١٤٤٦هـ</div>
                 </div>
-                <h1>أ. عبدالله بن محمد حمدي</h1>
-                <p>معلم كيمياء | خبير تربوي | مبرمج تعليمي</p>
-                <div class="academic-year">العام الدراسي ١٤٤٦هـ</div>
+                
+                <div class="profile-visual">
+                    <div class="science-icon">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <div style="color: #BBDEFB; font-weight: 500;">دمج التربية مع التقنية</div>
+                </div>
+            </div>
+            
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <span class="stat-number">١٢</span>
+                    <span class="stat-label">نشاط تربوي</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">٥٠٠+</span>
+                    <span class="stat-label">مستفيد مباشر</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">٨</span>
+                    <span class="stat-label">ورشة تدريبية</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">١٠٠٪</span>
+                    <span class="stat-label">رضا المستفيدين</span>
+                </div>
             </div>
         </div>
     </header>
     
-    <div class="container">
-        <!-- مقدمة -->
-        <section class="intro">
-            <h2><i class="fas fa-user-graduate"></i> مقدمة عن الأنشطة</h2>
-            <p>أهلاً وسهلاً بكم في صفحة الأنشطة التعليمية والتربوية لعام ١٤٤٦هـ. خلال هذا العام، حرصت على تنفيذ وتنظيم مجموعة متنوعة من الأنشطة التي تهدف إلى تطوير مهارات الطلاب العلمية والعملية، وتعزيز الاهتمام بمادة الكيمياء والعلوم بشكل عام. تضم هذه الصفحة ملخصاً لكل الأنشطة التي تم تنفيذها أو المشاركة فيها خلال هذا العام الدراسي.</p>
-            <p>تم تنفيذ هذه الأنشطة بالتعاون مع زملائي المعلمين وطلابي الأعزاء، بهدف إثراء البيئة التعليمية وتقديم فرص تعليمية متنوعة تعزز الإبداع والتفكير العلمي.</p>
-        </section>
-        
-        <!-- إحصائيات سريعة -->
-        <section class="stats">
-            <div class="stat-card">
-                <div class="stat-number">١٢</div>
-                <div class="stat-text">نشاط متنوع</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">٤٥٠+</div>
-                <div class="stat-text">طالب مشارك</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">٨</div>
-                <div class="stat-text">جوائز وتحفيزات</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">١٠٠٪</div>
-                <div class="stat-text">رضا المشاركين</div>
-            </div>
-        </section>
-        
-        <!-- الأنشطة -->
-        <h2 style="color: var(--primary); margin: 50px 0 30px; text-align: center; font-size: 2rem;">
-            <i class="fas fa-tasks"></i> الأنشطة المنجزة خلال العام
-        </h2>
-        
-        <div class="activities-container">
-            <!-- نشاط موهوب -->
-            <div class="activity-card">
-                <div class="activity-header card-mawhiba">
-                    <div class="activity-icon">
-                        <i class="fas fa-trophy"></i>
-                    </div>
-                    <h3>مسابقة موهوب للكيمياء</h3>
-                    <div class="activity-date">ربيع الأول - ربيع الثاني ١٤٤٦هـ</div>
-                </div>
-                <div class="activity-body">
-                    <p>إشراف وتدريب فريق المدرسة للمشاركة في مسابقة موهوب المحلية والعالمية في الكيمياء. مسابقة موهوب هي مبادرة وطنية تهدف إلى اكتشاف ورعاية الطلاب الموهوبين في المجالات العلمية.</p>
-                    <ul class="activity-features">
-                        <li>تدريب ٢٥ طالباً على منهجيات المسابقة</li>
-                        <li>تصميم تجارب كيميائية متقدمة</li>
-                        <li>تحضير الطلاب للمراحل التنافسية</li>
-                        <li>٣ طلاب تأهلوا للمرحلة الوطنية</li>
-                    </ul>
-                </div>
-                <div class="activity-footer">
-                    <div class="status completed">مكتمل</div>
-                    <div class="impact">تأثير عالي</div>
-                </div>
+    <!-- قسم الأنشطة الرئيسية -->
+    <section class="activities-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>الأنشطة التربوية والتعليمية</h2>
+                <p>مجموعة من أبرز الأنشطة التي تم تنفيذها خلال العام الدراسي ١٤٤٦هـ، بهدف إثراء البيئة التعليمية وتطوير المهارات العلمية والتقنية</p>
             </div>
             
-            <!-- المنصة الافتراضية -->
-            <div class="activity-card">
-                <div class="activity-header card-platform">
-                    <div class="activity-icon">
-                        <i class="fas fa-laptop-code"></i>
+            <div class="activities-grid">
+                <!-- نشاط مسابقة موهوب -->
+                <div class="activity-card fade-in card-mawhiba">
+                    <div class="activity-header">
+                        <div class="activity-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3 class="activity-title">مسابقة موهوب للكيمياء</h3>
+                        <div class="activity-period">محرم - صفر ١٤٤٦هـ</div>
                     </div>
-                    <h3>منصة التجارب البديلة الافتراضية</h3>
-                    <div class="activity-date">محرم - جمادى الأولى ١٤٤٦هـ</div>
-                </div>
-                <div class="activity-body">
-                    <p>تصميم وتطوير منصة إلكترونية تفاعلية تعرض التجارب الكيميائية البديلة التي صممها الطلاب باستخدام برامج المحاكاة، لتكون مصدراً تعليمياً متاحاً للجميع.</p>
-                    <ul class="activity-features">
-                        <li>تطوير واجهة تفاعلية باستخدام HTML/CSS/JS</li>
-                        <li>رفع ٣٥ تجربة افتراضية من تصميم الطلاب</li>
-                        <li>نظام تقييم ومتابعة من قبل المعلم</li>
-                        <li>توفير المنصة على الإنترنت للوصول السهل</li>
-                    </ul>
-                </div>
-                <div class="activity-footer">
-                    <div class="status completed">مكتمل</div>
-                    <div class="impact">مشروع تقني متميز</div>
-                </div>
-            </div>
-            
-            <!-- أسبوع العلوم -->
-            <div class="activity-card">
-                <div class="activity-header card-science-week">
-                    <div class="activity-icon">
-                        <i class="fas fa-microscope"></i>
+                    <div class="activity-body">
+                        <p class="activity-description">إشراف وتدريب فريق المدرسة للمشاركة في مسابقة موهوب المحلية والدولية في الكيمياء. مسابقة موهوب هي مبادرة وطنية تهدف إلى اكتشاف ورعاية الطلاب الموهوبين في المجالات العلمية.</p>
+                        <ul class="activity-features">
+                            <li>تدريب ٣٠ طالباً على منهجيات المسابقة</li>
+                            <li>تصميم تجارب كيميائية متقدمة تناسب المسابقة</li>
+                            <li>إعداد الطلاب للمراحل التنافسية المختلفة</li>
+                            <li>٤ طلاب تأهلوا للمرحلة الوطنية من المدرسة</li>
+                        </ul>
                     </div>
-                    <h3>تفعيل أسبوع العلوم العالمي</h3>
-                    <div class="activity-date">صفر ١٤٤٦هـ</div>
-                </div>
-                <div class="activity-body">
-                    <p>تنظيم وإدارة فعاليات أسبوع العلوم في المدرسة، الذي يهدف إلى نشر الثقافة العلمية وتشجيع الطلاب على الاهتمام بالعلوم والتجارب العملية.</p>
-                    <ul class="activity-features">
-                        <li>تنظيم ٨ ورش عمل علمية</li>
-                        <li>إقامة معرض للعلوم بمشاركة ٥٠ طالب</li>
-                        <li>عرض تجارب كيميائية تفاعلية آمنة</li>
-                        <li>محاضرة عن أهمية الكيمياء في الحياة</li>
-                    </ul>
-                </div>
-                <div class="activity-footer">
-                    <div class="status completed">مكتمل</div>
-                    <div class="impact">مشاركة واسعة</div>
-                </div>
-            </div>
-            
-            <!-- مسابقة البحوث -->
-            <div class="activity-card">
-                <div class="activity-header card-research">
-                    <div class="activity-icon">
-                        <i class="fas fa-file-alt"></i>
+                    <div class="activity-footer">
+                        <span class="activity-status status-completed">مكتمل</span>
+                        <span class="achievement-badge">تأهيل وطني</span>
                     </div>
-                    <h3>مسابقة البحوث العلمية المدرسية</h3>
-                    <div class="activity-date">ربيع الثاني - جمادى الآخرة ١٤٤٦هـ</div>
                 </div>
-                <div class="activity-body">
-                    <p>إشراف على طلاب المدرسة المشاركين في مسابقة البحوث العلمية على مستوى المدارس، وتوجيههم في إعداد أبحاث علمية مبتكرة في مجال الكيمياء.</p>
-                    <ul class="activity-features">
-                        <li>إشراف على ٧ فرق بحثية</li>
-                        <li️>تدريب الطلاب على منهجية البحث العلمي</li>
-                        <li>٣ بحوث تأهلت للمرحلة النهائية</li>
-                        <li>بحثان فازا بالمركزين الأول والثالث</li>
-                    </ul>
-                </div>
-                <div class="activity-footer">
-                    <div class="status completed">مكتمل</div>
-                    <div class="impact">إنجاز متميز</div>
-                </div>
-            </div>
-            
-            <!-- نشاط إضافي 1 -->
-            <div class="activity-card">
-                <div class="activity-header card-other">
-                    <div class="activity-icon">
-                        <i class="fas fa-vial"></i>
+                
+                <!-- منصة التجارب الافتراضية -->
+                <div class="activity-card fade-in card-platform">
+                    <div class="activity-header">
+                        <div class="activity-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3 class="activity-title">منصة التجارب البديلة الافتراضية</h3>
+                        <div class="activity-period">ربيع الأول - جمادى الآخرة ١٤٤٦هـ</div>
                     </div>
-                    <h3>نادي الكيمياء التطبيقية</h3>
-                    <div class="activity-date">طوال العام الدراسي</div>
-                </div>
-                <div class="activity-body">
-                    <p>تأسيس وإدارة نادي الكيمياء التطبيقية بالمدرسة، الذي يهدف إلى تعزيز الاهتمام العملي بالكيمياء وتطبيقاتها في الحياة اليومية.</p>
-                    <ul class="activity-features">
-                        <li>اجتماع أسبوعي للنادي</li>
-                        <li>تنفيذ ٢٠ تجربة عملية آمنة</li>
-                        <li>زيارات ميدانية لمصانع ومعامل كيميائية</li>
-                        <li>إصدار مجلة كيميائية فصلية</li>
-                    </ul>
-                </div>
-                <div class="activity-footer">
-                    <div class="status ongoing">مستمر</div>
-                    <div class="impact">تفاعل طلابي كبير</div>
-                </div>
-            </div>
-            
-            <!-- نشاط إضافي 2 -->
-            <div class="activity-card">
-                <div class="activity-header card-training">
-                    <div class="activity-icon">
-                        <i class="fas fa-chalkboard-teacher"></i>
+                    <div class="activity-body">
+                        <p class="activity-description">تصميم وتطوير منصة إلكترونية تفاعلية تعرض التجارب الكيميائية البديلة التي صممها الطلاب باستخدام برامج المحاكاة، لتكون مصدراً تعليمياً متاحاً للجميع.</p>
+                        <ul class="activity-features">
+                            <li>تطوير واجهة تفاعلية باستخدام HTML/CSS/JavaScript</li>
+                            <li>رفع ٤٠ تجربة افتراضية من تصميم الطلاب</li>
+                            <li>نظام تقييم ومتابعة من قبل المعلم</li>
+                            <li>توفير المنصة على الإنترنت للوصول السهل</li>
+                            <li>تصميم واجهة إدارة للمعلم لمتابعة التقدم</li>
+                        </ul>
                     </div>
-                    <h3>ورش تدريبية للمعلمين</h3>
-                    <div class="activity-date">ذو القعدة - ذو الحجة ١٤٤٦هـ</div>
+                    <div class="activity-footer">
+                        <span class="activity-status status-completed">مكتمل</span>
+                        <span class="achievement-badge">مشروع تقني متميز</span>
+                    </div>
                 </div>
-                <div class="activity-body">
-                    <p>تنظيم ورش عمل تدريبية لزملاء المعلمين حول استخدام التقنية في تدريس الكيمياء وتصميم التجارب الافتراضية.</p>
-                    <ul class="activity-features">
-                        <li>تدريب ٢٥ معلماً على أدوات تعليمية رقمية</li>
-                        <li️>ورشة تصميم التجارب الكيميائية الافتراضية</li>
-                        <li>تدريب على منصات التعلم الإلكتروني</li>
-                        <li>تطوير محتوى تعليمي تفاعلي</li>
-                    </ul>
+                
+                <!-- أسبوع العلوم -->
+                <div class="activity-card fade-in card-science-week">
+                    <div class="activity-header">
+                        <div class="activity-icon">
+                            <i class="fas fa-microscope"></i>
+                        </div>
+                        <h3 class="activity-title">تفعيل أسبوع العلوم العالمي</h3>
+                        <div class="activity-period">صفر ١٤٤٦هـ</div>
+                    </div>
+                    <div class="activity-body">
+                        <p class="activity-description">تنظيم وإدارة فعاليات أسبوع العلوم في المدرسة، الذي يهدف إلى نشر الثقافة العلمية وتشجيع الطلاب على الاهتمام بالعلوم والتجارب العملية.</p>
+                        <ul class="activity-features">
+                            <li>تنظيم ١٠ ورش عمل علمية تفاعلية</li>
+                            <li>إقامة معرض للعلوم بمشاركة ٦٠ طالباً</li>
+                            <li>عرض تجارب كيميائية تفاعلية آمنة</li>
+                            <li>محاضرة عن أهمية الكيمياء في الحياة اليومية</li>
+                            <li>توزيع ١٥٠ حقيبة تجارب علمية مصغرة</li>
+                        </ul>
+                    </div>
+                    <div class="activity-footer">
+                        <span class="activity-status status-completed">مكتمل</span>
+                        <span class="achievement-badge">مشاركة واسعة</span>
+                    </div>
                 </div>
-                <div class="activity-footer">
-                    <div class="status completed">مكتمل</div>
-                    <div class="impact">نقل معرفة</div>
+                
+                <!-- مسابقة البحوث العلمية -->
+                <div class="activity-card fade-in card-research">
+                    <div class="activity-header">
+                        <div class="activity-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3 class="activity-title">المشاركة في مسابقة البحوث العلمية</h3>
+                        <div class="activity-period">ربيع الثاني - جمادى الآخرة ١٤٤٦هـ</div>
+                    </div>
+                    <div class="activity-body">
+                        <p class="activity-description">إشراف على طلاب المدرسة المشاركين في مسابقة البحوث العلمية على مستوى المدارس، وتوجيههم في إعداد أبحاث علمية مبتكرة في مجال الكيمياء.</p>
+                        <ul class="activity-features">
+                            <li>إشراف على ٦ فرق بحثية</li>
+                            <li>تدريب الطلاب على منهجية البحث العلمي</li>
+                            <li>توجيه الطلاب في اختيار موضوعات البحث</li>
+                            <li>تقديم البحوث للمسابقة المدرسية</li>
+                            <li>تلقّي خطاب شكر من إدارة التعليم للمشاركة الفاعلة</li>
+                        </ul>
+                    </div>
+                    <div class="activity-footer">
+                        <span class="activity-status status-completed">مكتمل</span>
+                        <span class="achievement-badge">خطاب شكر وتقدير</span>
+                    </div>
+                </div>
+                
+                <!-- نادي الكيمياء التطبيقية الافتراضية -->
+                <div class="activity-card fade-in card-club">
+                    <div class="activity-header">
+                        <div class="activity-icon">
+                            <i class="fas fa-vial"></i>
+                        </div>
+                        <h3 class="activity-title">نادي الكيمياء التطبيقية الافتراضية</h3>
+                        <div class="activity-period">طوال العام الدراسي</div>
+                    </div>
+                    <div class="activity-body">
+                        <p class="activity-description">تأسيس وإدارة نادي الكيمياء التطبيقية بالمدرسة، الذي يهدف إلى تعزيز الاهتمام العملي بالكيمياء وتطبيقاتها في الحياة اليومية من خلال أدوات افتراضية.</p>
+                        <ul class="activity-features">
+                            <li>اجتماع أسبوعي افتراضي للنادي</li>
+                            <li>تنفيذ ٢٥ تجربة افتراضية باستخدام محاكيات</li>
+                            <li>تصميم كتيب إلكتروني للتجارب الافتراضية</li>
+                            <li>مشاركة ٤٠ طالباً في أنشطة النادي</li>
+                            <li>تنظيم مسابقة داخلية لأفضل تجربة افتراضية</li>
+                        </ul>
+                    </div>
+                    <div class="activity-footer">
+                        <span class="activity-status status-ongoing">مستمر</span>
+                        <span class="achievement-badge">تفاعل طلابي كبير</span>
+                    </div>
+                </div>
+                
+                <!-- ورش تدريب المعلمين -->
+                <div class="activity-card fade-in card-training">
+                    <div class="activity-header">
+                        <div class="activity-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <h3 class="activity-title">ورش تدريب المعلمين على التقنيات التعليمية</h3>
+                        <div class="activity-period">ذو القعدة - ذو الحجة ١٤٤٦هـ</div>
+                    </div>
+                    <div class="activity-body">
+                        <p class="activity-description">تنظيم ورش عمل تدريبية لزملاء المعلمين حول استخدام التقنية في التدريس وتصميم الأنشطة التفاعلية باستخدام منصات تعليمية مختلفة.</p>
+                        <ul class="activity-features">
+                            <li>تدريب ٣٠ معلماً على أدوات تعليمية رقمية</li>
+                            <li>ورشة متخصصة في استخدام منصة فيت (FEAT)</li>
+                            <li>تدريب على استخدام منصة بليكرز (Plickers)</li>
+                            <li>ورشة تصميم أنشطة باستخدام كلاس لوجو (ClassLogo)</li>
+                            <li>تدريب عملي على استخدام السبورة التفاعلية</li>
+                        </ul>
+                    </div>
+                    <div class="activity-footer">
+                        <span class="activity-status status-completed">مكتمل</span>
+                        <span class="achievement-badge">نقل معرفة</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
     
-    <!-- التذييل -->
+    <!-- قسم التقنيات المستخدمة -->
+    <section class="technologies-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>التقنيات والأدوات التعليمية المستخدمة</h2>
+                <p>مجموعة من المنصات والأدوات التقنية التي تم تدريب المعلمين عليها واستخدامها في الأنشطة التعليمية</p>
+            </div>
+            
+            <div class="tech-grid">
+                <div class="tech-card fade-in">
+                    <div class="tech-icon">
+                        <i class="fas fa-vr-cardboard"></i>
+                    </div>
+                    <h4 class="tech-name">منصة فيت (FEAT)</h4>
+                    <p class="tech-description">منصة للتعلم الافتراضي والواقع المعزز في التجارب العلمية</p>
+                </div>
+                
+                <div class="tech-card fade-in">
+                    <div class="tech-icon">
+                        <i class="fas fa-poll"></i>
+                    </div>
+                    <h4 class="tech-name">بليكرز (Plickers)</h4>
+                    <p class="tech-description">أداة تقييم فورية باستخدام البطاقات والهواتف الذكية</p>
+                </div>
+                
+                <div class="tech-card fade-in">
+                    <div class="tech-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h4 class="tech-name">كلاس لوجو (ClassLogo)</h4>
+                    <p class="tech-description">منصة لإنشاء هوية بصرية للفصول والأنشطة التعليمية</p>
+                </div>
+                
+                <div class="tech-card fade-in">
+                    <div class="tech-icon">
+                        <i class="fas fa-chalkboard"></i>
+                    </div>
+                    <h4 class="tech-name">السبورة التفاعلية</h4>
+                    <p class="tech-description">استخدام متقدم للسبورة التفاعلية في شرح الدروس العلمية</p>
+                </div>
+                
+                <div class="tech-card fade-in">
+                    <div class="tech-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h4 class="tech-name">محاكيات التجارب</h4>
+                    <p class="tech-description">برامج محاكاة للتجارب الكيميائية المعقدة والخطرة</p>
+                </div>
+                
+                <div class="tech-card fade-in">
+                    <div class="tech-icon">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h4 class="tech-name">تطوير الويب التعليمي</h4>
+                    <p class="tech-description">HTML/CSS/JavaScript لتصميم منصات تعليمية تفاعلية</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- الفوتر -->
     <footer>
         <div class="container">
-            <h3>معلم الكيمياء - أ. عبدالله بن محمد حمدي</h3>
-            <p>للاتصال أو الاستفسار عن الأنشطة</p>
-            
-            <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <span>abdullah.chem.teacher@example.edu.sa</span>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>معلومات التواصل</h3>
+                    <ul class="contact-list">
+                        <li><i class="fas fa-envelope"></i> abdullah.hamdi@edu.sa</li>
+                        <li><i class="fas fa-phone"></i> +966 55 123 4567</li>
+                        <li><i class="fas fa-school"></i> مدرسة العلوم التطبيقية النموذجية</li>
+                        <li><i class="fas fa-map-marker-alt"></i> المملكة العربية السعودية</li>
+                    </ul>
                 </div>
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i>
-                    <span>+966 55 123 4567</span>
+                
+                <div class="footer-section">
+                    <h3>التخصصات</h3>
+                    <ul class="contact-list">
+                        <li><i class="fas fa-flask"></i> تدريس الكيمياء</li>
+                        <li><i class="fas fa-laptop-code"></i> البرمجة التعليمية</li>
+                        <li><i class="fas fa-chalkboard-teacher"></i> التدريب التربوي</li>
+                        <li><i class="fas fa-lightbulb"></i> الابتكار التعليمي</li>
+                    </ul>
                 </div>
-                <div class="contact-item">
-                    <i class="fas fa-school"></i>
-                    <span>مدرسة العلوم التطبيقية</span>
+                
+                <div class="footer-section">
+                    <h3>شكر وتقدير</h3>
+                    <p>أتقدّم بالشكر لزملائي المعلمين وطلابي الأعزاء على تعاونهم ودعمهم في تنفيذ هذه الأنشطة. كما أشكر إدارة المدرسة على توفير البيئة الداعمة للإبداع التربوي.</p>
                 </div>
             </div>
             
             <div class="copyright">
-                جميع الحقوق محفوظة &copy; ١٤٤٦هـ / ٢٠٢٤م | تم تصميم هذه الصفحة لعرض الأنشطة التربوية والتعليمية
+                <p>جميع الحقوق محفوظة &copy; ١٤٤٦هـ / ٢٠٢٤م | أ. عبدالله بن محمد حمدي | معلم متقدم تربوي ومبرمج تعليمي</p>
+                <p style="margin-top: 10px; font-size: 0.85rem;">تم تصميم هذه الصفحة باستخدام HTML/CSS/JavaScript لعرض الأنشطة التربوية والتعليمية</p>
             </div>
         </div>
     </footer>
     
     <script>
-        // إضافة تأثيرات تفاعلية بسيطة
+        // تأثير الظهور عند التمرير
         document.addEventListener('DOMContentLoaded', function() {
-            // إضافة تأثير عند التمرير على البطاقات
-            const cards = document.querySelectorAll('.activity-card');
+            const fadeElements = document.querySelectorAll('.fade-in');
             
+            const fadeObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            fadeElements.forEach(element => {
+                fadeObserver.observe(element);
+            });
+            
+            // تأثير للبطاقات عند التحويم
+            const cards = document.querySelectorAll('.activity-card');
             cards.forEach(card => {
                 card.addEventListener('mouseenter', function() {
                     this.style.transform = 'translateY(-10px)';
                 });
                 
                 card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                });
-            });
-            
-            // تأثير ظهور البطاقات عند التمرير
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
+                    if (!this.classList.contains('visible')) {
+                        this.style.transform = 'translateY(0)';
                     }
                 });
-            }, observerOptions);
-            
-            // تطبيق تأثير الظهور على البطاقات
-            cards.forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                observer.observe(card);
             });
             
-            // إضافة تاريخ اليوم الهجري (محاكاة)
-            const hijriDate = "١٥ شعبان ١٤٤٦هـ";
-            const header = document.querySelector('header');
+            // إضافة تاريخ هجري ديناميكي
+            const hijriMonths = ["محرم", "صفر", "ربيع الأول", "ربيع الثاني", "جمادى الأولى", "جمادى الآخرة", "رجب", "شعبان", "رمضان", "شوال", "ذو القعدة", "ذو الحجة"];
+            const today = new Date();
+            const hijriDate = "١٥ " + hijriMonths[today.getMonth()] + " ١٤٤٦هـ";
+            
             const dateElement = document.createElement('div');
             dateElement.style.cssText = `
+                text-align: center;
                 margin-top: 15px;
+                color: #BBDEFB;
                 font-size: 1rem;
-                background: rgba(255,255,255,0.2);
-                padding: 8px 20px;
-                border-radius: 20px;
-                display: inline-block;
+                font-weight: 500;
             `;
             dateElement.innerHTML = `<i class="fas fa-calendar-alt"></i> ${hijriDate}`;
-            document.querySelector('.profile').appendChild(dateElement);
+            document.querySelector('.profile-visual').appendChild(dateElement);
         });
     </script>
 </body>
